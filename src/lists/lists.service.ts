@@ -1,11 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
 import { CreateListDto } from './dto/create-list.dto';
 import { UpdateListDto } from './dto/update-list.dto';
+import { ListModel } from './entities/list.model';
 
 @Injectable()
 export class ListsService {
+  constructor(
+    @InjectModel(ListModel)
+    private listModel: typeof ListModel,
+  ) {}
+
   create(createListDto: CreateListDto) {
-    return 'This action adds a new list';
+   return this.listModel.create(createListDto);
   }
 
   findAll() {
